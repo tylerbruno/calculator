@@ -13,11 +13,29 @@ buttonsThatDisplay.forEach((button) => {
             display.textContent = button.textContent;
             displayValue = button.textContent;
         } else if (display.textContent.split("").length < 9) {
-            display.textContent = display.textContent + button.textContent;
-            displayValue = display.textContent;
+            if (display.textContent === "0" && button.textContent === "0") {
+                return;
+            } else if (display.textContent === "0") {
+                if (button.textContent === ".") {
+                    display.textContent = display.textContent + button.textContent;
+                    displayValue = display.textContent;
+                } else {
+                    display.textContent = button.textContent;
+                    displayValue = button.textContent;
+                }
+            } else if (display.textContent.split("").includes(".")) {
+                if (button.textContent === ".") {
+                    return;
+                }  else {
+                    display.textContent = display.textContent + button.textContent;
+                    displayValue = display.textContent;
+                }
+            } else {
+                display.textContent = display.textContent + button.textContent;
+                displayValue = display.textContent;
+            }
         }
         
-
         previousButton = button.textContent;
     });
 });
@@ -29,7 +47,11 @@ operatorButtons.forEach((button) => {
             firstNumber = Number(displayValue);
             operator = button.textContent;
         } else {
-            secondNumber = Number(displayValue);
+            if (previousButton === "/" || previousButton === "*" || previousButton === "+" || previousButton === "-") {
+                secondNumber = firstNumber;
+            } else {
+                secondNumber = Number(displayValue);
+            }
             const answer = operate(operator, firstNumber, secondNumber);
             display.textContent = answer;
             firstNumber = answer;
@@ -60,6 +82,7 @@ clearButton.addEventListener("click", () => {
     firstNumber = undefined;
     secondNumber = undefined;
     operator = "";
+    previousButton = "AC";
 });
 
 
@@ -72,12 +95,22 @@ plusMinusButton.addEventListener("click", () => {
         display.textContent = `${-(Number(displayValue))}`;
         displayValue = display.textContent;
     }
+
+    previousButton = "+/-";
 });
+
+const percentButton = document.querySelector("#percentage");
+percentButton.addEventListener("click", () => {
+    const percentAnswer = (Number(displayValue)/100).toExponential(2);
+    display.textContent = percentAnswer;
+    displayValue = percentAnswer;
+    previousButton = "%";
+})
 
 
 function add(a, b) {
     const addAnswer = a + b;
-    if (addAnswer > 99999999) {
+    if (addAnswer > 99999999 || addAnswer < -99999999) {
         return addAnswer.toExponential(2);
     } else {
         return Math.round(1000 * addAnswer) / 1000;
@@ -86,7 +119,7 @@ function add(a, b) {
 
 function subtract(a, b) {
     const subtractAnswer = a - b;
-    if (subtractAnswer > 99999999) {
+    if (subtractAnswer > 99999999 || subtractAnswer < -99999999) {
         return subtractAnswer.toExponential(2);
     } else {
         return Math.round(1000 * subtractAnswer) / 1000;
@@ -95,7 +128,7 @@ function subtract(a, b) {
 
 function multiply(a, b) {
     const multiplyAnswer = a * b;
-    if (multiplyAnswer > 99999999) {
+    if (multiplyAnswer > 99999999 || multiplyAnswer < -99999999) {
         return multiplyAnswer.toExponential(2);
     } else {
         return Math.round(1000 * multiplyAnswer) / 1000;
@@ -107,7 +140,7 @@ function divide(a, b) {
         return "lmao";
     }
     const divideAnswer = a / b;
-    if (divideAnswer > 99999999) {
+    if (divideAnswer > 99999999 || divideAnswer < -99999999) {
         return divideAnswer.toExponential(2);
     } else {
         return Math.round(1000 * divideAnswer) / 1000;
