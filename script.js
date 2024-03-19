@@ -12,10 +12,11 @@ buttonsThatDisplay.forEach((button) => {
         || previousButton === "=") {
             display.textContent = button.textContent;
             displayValue = button.textContent;
-        } else {
+        } else if (display.textContent.split("").length < 9) {
             display.textContent = display.textContent + button.textContent;
             displayValue = display.textContent;
         }
+        
 
         previousButton = button.textContent;
     });
@@ -45,6 +46,7 @@ equalsButton.addEventListener("click", () => {
     secondNumber = Number(displayValue);
     const result = operate(operator, firstNumber, secondNumber);
     display.textContent = result;
+    displayValue = result;
     firstNumber = undefined;
     secondNumber = undefined;
     operator = "";
@@ -54,32 +56,62 @@ equalsButton.addEventListener("click", () => {
 const clearButton = document.querySelector("#clear");
 clearButton.addEventListener("click", () => {
     display.textContent = "";
+    displayValue = "";
     firstNumber = undefined;
     secondNumber = undefined;
     operator = "";
 });
 
-/*
+
 const plusMinusButton = document.querySelector("#plus-minus");
 plusMinusButton.addEventListener("click", () => {
-    display.textContent = ;
+    if (Number(displayValue) > 0) {
+        display.textContent = `-${displayValue}`;
+        displayValue = display.textContent;
+    } else if (Number(displayValue) < 0) {
+        display.textContent = `${-(Number(displayValue))}`;
+        displayValue = display.textContent;
+    }
 });
-*/
+
 
 function add(a, b) {
-    return a + b;
+    const addAnswer = a + b;
+    if (addAnswer > 99999999) {
+        return addAnswer.toExponential(2);
+    } else {
+        return Math.round(1000 * addAnswer) / 1000;
+    }
 }
 
 function subtract(a, b) {
-    return a - b;
+    const subtractAnswer = a - b;
+    if (subtractAnswer > 99999999) {
+        return subtractAnswer.toExponential(2);
+    } else {
+        return Math.round(1000 * subtractAnswer) / 1000;
+    }
 }
 
 function multiply(a, b) {
-    return a * b;
+    const multiplyAnswer = a * b;
+    if (multiplyAnswer > 99999999) {
+        return multiplyAnswer.toExponential(2);
+    } else {
+        return Math.round(1000 * multiplyAnswer) / 1000;
+    }
 }
 
 function divide(a, b) {
-    return a / b;
+    if (b === 0) {
+        return "lmao";
+    }
+    const divideAnswer = a / b;
+    if (divideAnswer > 99999999) {
+        return divideAnswer.toExponential(2);
+    } else {
+        return Math.round(1000 * divideAnswer) / 1000;
+    }
 }
 
 function operate(operatorChoice, num1, num2) {
