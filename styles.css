@@ -1,0 +1,77 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: monospace;
+}
+
+#flexbox-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#calculator-container {
+    height: 520px;
+    width: 450px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background-color: #282828;
+    border-radius: 5px;
+}
+
+#display {
+    background-color: #C3CBD6;
+    height: 100px;
+    font-size: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 3px;
+}
+
+#first-row, #second-row, #third-row, #fourth-row, #fifth-row {
+    display: flex;
+    gap: 5px;
+}
+
+.first-row-button, .second-row-button, .third-row-button, .fourth-row-button, .fifth-row-button{
+    height: 80px;
+    flex: 1;
+}
+
+#zero-button {
+    height: 80px;
+    flex: 2;
+    flex-basis: 5px;
+}
+
+.operators {
+    background-color: #2A403D;
+    font-size: 25px;
+    border-radius: 5px;
+    border: none;
+}
+
+#equals {
+    background-color: #2A403D;
+    font-size: 25px;
+    border-radius: 5px;
+    border: none;
+}
+
+.digits {
+    background-color: #748B6F;
+    font-size: 25px;
+    border-radius: 5px;
+    border: none;
+}
+
+.miscellaneous {
+    background-color: #D05663;
+    font-size: 25px;
+    border-radius: 5px;
+    border: none;
+}
